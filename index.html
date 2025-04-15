@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上海金茂君悦酒店 vs. 上海中心J酒店</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', '微软雅黑', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background-color: #1a365d;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subheading {
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hotel-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .hotel-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .hotel-header {
+            padding: 20px;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+
+        .hotel-name {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            color: #1a365d;
+        }
+
+        .suite-name {
+            font-size: 1.2rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .hotel-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .hotel-details {
+            padding: 20px;
+        }
+
+        .feature-list {
+            margin-bottom: 20px;
+        }
+
+        .feature-item {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .feature-title {
+            flex: 0 0 120px;
+            font-weight: bold;
+            color: #1a365d;
+        }
+
+        .feature-desc {
+            flex: 1;
+        }
+
+        .description {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.05);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .prev,
+        .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            padding: 16px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .prev {
+            left: 20px;
+        }
+
+        .next {
+            right: 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 40px 0 20px;
+            font-size: 2rem;
+            color: #1a365d;
+        }
+
+        footer {
+            background-color: #1a365d;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>上海酒店对比</h1>
+        <div class="subheading">金茂君悦外交官套房 VS 上海中心J酒店云上套房</div>
+    </header>
+
+    <div class="container">
+        <div class="comparison-grid">
+            <!-- 金茂君悦外交官套房 -->
+            <div class="hotel-card">
+                <div class="hotel-header">
+                    <h2 class="hotel-name">上海金茂君悦大酒店</h2>
+                    <div class="suite-name">外交官套房</div>
+                </div>
+                <img id="hyatt-main-image" src="images/hyatt-grand/suite-overview.jpg" alt="金茂君悦外交官套房"
+                    class="hotel-image" onclick="openModal();currentSlide(1, 'hyatt')">
+                <div class="hotel-details">
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-title">面积</div>
+                            <div class="feature-desc">约120-150平方米</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-title">房型</div>
+                            <div class="feature-desc">一卧室套房</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-title">楼层</div>
+                            <div class="feature-desc">位于金茂大厦53-87层</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-title">价格</div>
+                            <div class="feature-desc">¥3,600/晚 (41000积分)</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-title">早餐</div>
+                            <div class="feature-desc">嘉宾轩提供精致中西式自助早餐</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-title">晚餐</div>
+                            <div class="feature-desc">多个餐厅可选，包括中餐厅和特色西餐厅</div>
+                        </div>
+                    </div>
+
+                    <div class="description">
+                        <h3>酒店介绍</h3>
+                        <p>上海金茂君悦大酒店位于浦东新区世纪大道88号金茂大厦的53-87层，是世界最高酒店之一。酒店于1999年开业，装修融合了现代艺术与中国传统文化，提供豪华客房服务和壮丽的城市景观。</p>
+                    </div>
+
+                    <div class="description">
+                        <h3>套房介绍</h3>
+                        <p>外交官套房设计典雅，融合中西方元素，配有宽敞的起居室和独立卧室。套房内设施齐全，包括高科技的三喷头淋浴塔、防蒸汽镜和豪华浴缸，床头背板采用传统中式设计，镌刻金色唐诗，展现东方文化底蕴。
+                        </p>
+                    </div>
+
+                    <div class="image-gallery" id="hyatt-gallery">
+                        <!-- 图片将通过JavaScript动态添加 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 上海中心J酒店云上套房 -->
+            <div class="hotel-card">
+                <div class="hotel-header">
+                    <h2 class="hotel-name">上海中心J酒店</h2>
+                    <div class="suite-name">云上套房</div>
+                </div>
+                <img id="j-hotel-main-image" src="images/j-hotel/suite-overview.jpg" alt="上海中心J酒店云上套房"
+                    class="hotel-image" onclick="openModal();currentSlide(1, 'j-hotel')">
+                <div class="hotel-details">
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-title">面积</div>
+                            <div class="feature-desc">约100平方米</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-title">房型</div>
+                            <div class="feature-desc">一卧室套房</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-title">楼层</div>
+                            <div class="feature-desc">位于上海中心大厦86-98层</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-title">价格</div>
+                            <div class="feature-desc">¥6,000/晚 (41,000积分)</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-title">早餐</div>
+                            <div class="feature-desc">半自助式精品早餐，提供面条、小馄饨等定制选项</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-title">晚餐</div>
+                            <div class="feature-desc">可选上海101意式餐厅或其他特色餐厅</div>
+                        </div>
+                    </div>
+
+                    <div class="description">
+                        <h3>酒店介绍</h3>
+                        <p>上海中心J酒店位于世界第三、中国第一高楼上海中心大厦的顶端，是目前全球最高酒店之一。酒店融合古今中外之长，集多种艺术之美，给予宾客俯瞰上海的全新视野，展现具有现代东方特色的旅居体验。
+                        </p>
+                    </div>
+
+                    <div class="description">
+                        <h3>套房介绍</h3>
+                        <p>云上套房以淡雅的米色系为主，精致织物和真皮材质触感细腻。得益于宽敞的空间和落地大窗精妙的采光设计，房间明亮舒适，打造出置身云上的美妙入住体验。驻足窗边即可欣赏摩天楼和浦江风光。</p>
+                    </div>
+
+                    <div class="image-gallery" id="j-hotel-gallery">
+                        <!-- 图片将通过JavaScript动态添加 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">特色比较</h2>
+
+        <div class="comparison-grid">
+            <!-- 金茂君悦特色 -->
+            <div class="hotel-card">
+                <div class="hotel-header">
+                    <h3>金茂君悦特色亮点</h3>
+                </div>
+                <div class="hotel-details">
+                    <ul style="list-style-type: none; padding: 0;">
+                        <li class="feature-item">
+                            <div class="feature-title">历史底蕴</div>
+                            <div class="feature-desc">作为上海最早的高端酒店之一，拥有较悠久的历史和成熟服务体系</div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-title">设计风格</div>
+                            <div class="feature-desc">中西融合，将唐诗等传统元素融入现代设计</div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-title">嘉宾轩服务</div>
+                            <div class="feature-desc">提供专属服务和额外福利，如私人礼宾服务</div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-title">价格优势</div>
+                            <div class="feature-desc">相较而言价格更亲民，性价比较高</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 上海中心J酒店特色 -->
+            <div class="hotel-card">
+                <div class="hotel-header">
+                    <h3>上海中心J酒店特色亮点</h3>
+                </div>
+                <div class="hotel-details">
+                    <ul style="list-style-type: none; padding: 0;">
+                        <li class="feature-item">
+                            <div class="feature-title">最高体验</div>
+                            <div class="feature-desc">全球最高酒店之一，提供独一无二的高空体验</div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-title">现代奢华</div>
+                            <div class="feature-desc">采用高端材质和现代设计，打造顶级奢华感</div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-title">专属管家</div>
+                            <div class="feature-desc">提供全程管家服务，个性化定制入住体验</div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="feature-title">艺术体验</div>
+                            <div class="feature-desc">酒店内融入多种艺术元素，如水晶石库门装置</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 图片查看器模态框 -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" src="">
+        </div>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+
+    <footer>
+        <p>上海酒店二选一 &copy; 2025</p>
+    </footer>
+
+    <script>
+        // 定义图片文件夹路径
+        const hotelPaths = {
+            'hyatt': 'images/hyatt-grand',
+            'j-hotel': 'images/j-hotel'
+        };
+
+        // 存储加载的图片
+        const hotelImages = {
+            'hyatt': [],
+            'j-hotel': []
+        };
+
+        // 初始化函数
+        function initializeGallery() {
+            // 每个酒店15张图片（0-14）
+            const imageCount = 15;
+
+            // 遍历两个酒店的图片
+            for (const hotel in hotelPaths) {
+                // 生成图片路径数组
+                hotelImages[hotel] = Array.from({ length: imageCount }, (_, i) =>
+                    `${hotelPaths[hotel]}/${i}.jpg`
+                );
+
+                // 更新主图
+                const mainImage = document.querySelector(`#${hotel}-main-image`);
+                if (mainImage) {
+                    mainImage.src = hotelImages[hotel][0];
+                }
+
+                // 更新图片画廊
+                const gallery = document.querySelector(`#${hotel}-gallery`);
+                if (gallery) {
+                    gallery.innerHTML = hotelImages[hotel].map((img, index) => `
+                        <img src="${img}" 
+                             alt="${hotel === 'hyatt' ? '金茂君悦外交官套房' : '上海中心J酒店云上套房'} - 图片${index + 1}" 
+                             class="gallery-image" 
+                             onclick="openModal();currentSlide(${index + 1}, '${hotel}')">`
+                    ).join('');
+                }
+            }
+        }
+
+        let currentHotel = 'hyatt';
+        let slideIndex = 1;
+
+        // 打开模态框
+        function openModal() {
+            document.getElementById("imageModal").style.display = "flex";
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            document.getElementById("imageModal").style.display = "none";
+        }
+
+        // 显示特定幻灯片
+        function currentSlide(n, hotel) {
+            currentHotel = hotel;
+            slideIndex = n;
+            showSlides(slideIndex);
+        }
+
+        // 切换幻灯片
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        // 显示幻灯片
+        function showSlides(n) {
+            const slides = hotelImages[currentHotel];
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+
+            document.getElementById("modalImage").src = slides[slideIndex - 1];
+        }
+
+        // 关闭点击模态框背景
+        window.onclick = function (event) {
+            const modal = document.getElementById("imageModal");
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // 键盘操作
+        document.addEventListener('keydown', function (e) {
+            if (document.getElementById("imageModal").style.display === "flex") {
+                if (e.key === "ArrowLeft") {
+                    plusSlides(-1);
+                } else if (e.key === "ArrowRight") {
+                    plusSlides(1);
+                } else if (e.key === "Escape") {
+                    closeModal();
+                }
+            }
+        });
+
+        // 页面加载完成后初始化图片画廊
+        document.addEventListener('DOMContentLoaded', initializeGallery);
+    </script>
+</body>
+
+</html>
