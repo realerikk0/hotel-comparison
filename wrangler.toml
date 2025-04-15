@@ -1,0 +1,5 @@
+name = "hotel-comparison"
+compatibility_date = "2025-04-15"
+
+[site]
+bucket = "./"
