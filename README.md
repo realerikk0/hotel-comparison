@@ -38,6 +38,8 @@ hotel-comparison/
 │       ├── 1.jpg
 │       └── ...
 ├── index.html          # 主页面
+├── .cloudflare/        # Cloudflare配置
+│   └── pages.json      # Pages配置文件
 └── README.md          # 项目说明文档
 ```
 
@@ -60,9 +62,13 @@ hotel-comparison/
 3. 部署到Cloudflare Pages：
    - 连接您的GitHub仓库
    - 选择main分支
-   - 构建命令留空
-   - 构建输出目录留空
-   - 点击部署
+   - 在项目设置中配置：
+     - 构建命令（Build command）留空
+     - 构建输出目录（Build output directory）设置为 `/`
+     - 根目录（Root directory）留空
+   - 环境变量设置（可选）：
+     - NODE_VERSION: 16
+   - 点击保存并部署
 
 ## 技术栈
 
